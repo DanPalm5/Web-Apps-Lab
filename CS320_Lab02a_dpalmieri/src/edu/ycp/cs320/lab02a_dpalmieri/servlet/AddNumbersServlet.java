@@ -36,25 +36,28 @@ public class AddNumbersServlet extends HttpServlet {
 		Double result = null;
 		
 		// decode POSTed form parameters and dispatch to controller
-		try {
-			Double first = getDoubleFromParameter(req.getParameter("first"));
-			Double second = getDoubleFromParameter(req.getParameter("second"));
+		// decode POSTed form parameters and dispatch to controller
+				try {
+					Double first = getDoubleFromParameter(req.getParameter("first"));
+					Double second = getDoubleFromParameter(req.getParameter("second"));
+					Double third = getDoubleFromParameter(req.getParameter("third"));
 
-			// check for errors in the form data before using is in a calculation
-			if (first == null || second == null) {
-				errorMessage = "Please specify two numbers";
-			}
-			// otherwise, data is good, do the calculation
-			// must create the controller each time, since it doesn't persist between POSTs
-			// the view does not alter data, only controller methods should be used for that
-			// thus, always call a controller method to operate on the data
-			else {
-				NumbersController controller = new NumbersController();
-				result = controller.add(first, second);
-			}
-		} catch (NumberFormatException e) {
-			errorMessage = "Invalid double";
-		}
+					// check for errors in the form data before using is in a calculation
+					if (first == null || second == null || third == null) {
+						errorMessage = "Please specify three numbers";
+					}
+					// otherwise, data is good, do the calculation
+					// must create the controller each time, since it doesn't persist between POSTs
+					// the view does not alter data, only controller methods should be used for that
+					// thus, always call a controller method to operate on the data
+					else {
+						NumbersController controller = new NumbersController();
+						result = controller.add(first, second, third);
+					}
+				} catch (NumberFormatException e) {
+					errorMessage = "Invalid double";
+				}
+				
 		
 		// Add parameters as request attributes
 		// this creates attributes named "first" and "second for the response, and grabs the
