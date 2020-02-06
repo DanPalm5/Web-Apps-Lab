@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.lab02a_dpalmieri.controller.NumbersController;
+import edu.ycp.cs320.lab02a_dpalmieri.model.Numbers;
+
 
 public class AddNumbersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -27,8 +29,10 @@ public class AddNumbersServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		System.out.println("AddNumbers Servlet: doPost");
+	
+		// create model each time a request is passed
+		Numbers model = new Numbers();
 		
-
 		// holds the error message text, if there is any
 		String errorMessage = null;
 
@@ -52,10 +56,14 @@ public class AddNumbersServlet extends HttpServlet {
 					// thus, always call a controller method to operate on the data
 					else {
 						NumbersController controller = new NumbersController();
+						// assign model reference to allow controller to access it
+						controller.setModel(model);
 						result = controller.add(first, second, third);
 					}
 				} catch (NumberFormatException e) {
 					errorMessage = "Invalid double";
+	
+
 				}
 				
 		
