@@ -40,6 +40,10 @@ public class MultiplyNumbersServlet extends HttpServlet {
 		// result of calculation goes here
 		Double result = null;
 		
+		NumbersController controller = new NumbersController();
+		// assign model reference to allow controller to access it
+		controller.setModel(model);
+		
 		// decode POSTed form parameters and dispatch to controller
 		try {
 			Double first = getDoubleFromParameter(req.getParameter("first"));
@@ -54,13 +58,15 @@ public class MultiplyNumbersServlet extends HttpServlet {
 			// the view does not alter data, only controller methods should be used for that
 			// thus, always call a controller method to operate on the data
 			else {
-				NumbersController controller = new NumbersController();
-				// assign model reference to allow controller to access it
-				controller.setModel(model);
-				result = controller.multiply(first, second);
+				result = Double.parseDouble(controller.multiply(first.toString(), second.toString()));
 			}
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid double";
+			// assign model reference to allow controller to access it
+			String first = req.getParameter("first");
+			String second = req.getParameter("second");
+			model.setFirst(first);
+			model.setSecond(second);
 			
 		}
 		
@@ -76,6 +82,11 @@ public class MultiplyNumbersServlet extends HttpServlet {
 		// this adds the errorMessage text and the result to the response
 		req.setAttribute("errorMessage", errorMessage);
 		req.setAttribute("result", result);
+		
+		
+		// set "game" attribute to the model reference
+		// the JSP will reference the model elements through "game"
+		req.setAttribute("numbers", model);
 		
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/multiplyNumbers.jsp").forward(req, resp);

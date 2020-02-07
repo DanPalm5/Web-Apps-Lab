@@ -41,29 +41,39 @@ public class AddNumbersServlet extends HttpServlet {
 		
 		// decode POSTed form parameters and dispatch to controller
 		// decode POSTed form parameters and dispatch to controller
-				try {
-					Double first = getDoubleFromParameter(req.getParameter("first"));
-					Double second = getDoubleFromParameter(req.getParameter("second"));
-					Double third = getDoubleFromParameter(req.getParameter("third"));
-
-					// check for errors in the form data before using is in a calculation
-					if (first == null || second == null || third == null) {
-						errorMessage = "Please specify three numbers";
-					}
-					// otherwise, data is good, do the calculation
-					// must create the controller each time, since it doesn't persist between POSTs
-					// the view does not alter data, only controller methods should be used for that
-					// thus, always call a controller method to operate on the data
-					else {
-						NumbersController controller = new NumbersController();
-						// assign model reference to allow controller to access it
-						controller.setModel(model);
-						result = controller.add(first, second, third);
-					}
-				} catch (NumberFormatException e) {
-					errorMessage = "Invalid double";
+		
+		// must create the controller each time, since it doesn't persist between POSTs
+		// the view does not alter data, only controller methods should be used for that
+		// thus, always call a controller method to operate on the data
+		NumbersController controller = new NumbersController();
+		// assign model reference to allow controller to access it
+		controller.setModel(model);
 	
+			try {
+				Double first = getDoubleFromParameter(req.getParameter("first"));
+				Double second = getDoubleFromParameter(req.getParameter("second"));
+				Double third = getDoubleFromParameter(req.getParameter("third"));
 
+					
+				// check for errors in the form data before using is in a calculation
+				if (first == null || second == null || third == null) {
+					errorMessage = "Please specify three numbers";
+				}
+				// otherwise, data is good, do the calculation
+					
+				else {
+					result = Double.parseDouble(controller.add(first.toString(), second.toString(), third.toString()));	
+				}
+			} catch (NumberFormatException e) {
+				errorMessage = "Invalid double";
+					
+				String first = req.getParameter("first");
+				String second = req.getParameter("second");
+				String third = req.getParameter("third");
+				model.setFirst(first);
+				model.setSecond(second);
+				model.setThird(third);
+					
 				}
 				
 		
@@ -74,11 +84,15 @@ public class AddNumbersServlet extends HttpServlet {
 		// and forth, it's a good idea
 		req.setAttribute("first", req.getParameter("first"));
 		req.setAttribute("second", req.getParameter("second"));
-		
+		req.setAttribute("third", req.getParameter("third"));
 		// add result objects as attributes
 		// this adds the errorMessage text and the result to the response
 		req.setAttribute("errorMessage", errorMessage);
 		req.setAttribute("result", result);
+		
+		// set "game" attribute to the model reference
+		// the JSP will reference the model elements through "game"
+		req.setAttribute("numbers", model);
 		
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/addNumbers.jsp").forward(req, resp);

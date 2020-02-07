@@ -4,49 +4,49 @@ package edu.ycp.cs320.lab02a_dpalmieri.model;
 //only the controller should be allowed to call the set methods
 //the JSP will call the "get" and "is" methods implicitly
 public class Numbers {
-	private Double first, second, third, addResult, multiplyResult;
+	private String first, second, third, addResult, multiplyResult;
 	
 	public Numbers() {
 		
 	}
 	
-	public Double getFirst() {
+	public String getFirst() {
 		return first;
 	}
 	
-	public Double getSecond() {
+	public String getSecond() {
 		return second;
 	}
 	
-	public Double getThird() {
+	public String getThird() {
 		return third;
 	}
 	
-	public Double getAddResult() {
+	public String getAddResult() {
 		return addResult;
 	}
 	
-	public Double getMultiplyResult() {
+	public String getMultiplyResult() {
 		return multiplyResult;
 	}
 	
-	public void setFirst(Double first) {
+	public void setFirst(String first) {
 		this.first = first;
 	}
 	
-	public void setSecond(Double second) {
+	public void setSecond(String second) {
 		this.second = second;
 	}
 	
-	public void setThird(Double third) {
+	public void setThird(String third) {
 		this.third = third;
 	}
 	
-	public void setAddResult(Double addResult) {
+	public void setAddResult(String addResult) {
 		this.addResult = addResult;
 	}
 	
-	public void setMultiplyResult(Double multiplyResult) {
+	public void setMultiplyResult(String multiplyResult) {
 		this.multiplyResult = multiplyResult;
 	}
 	

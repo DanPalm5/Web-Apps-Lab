@@ -38,7 +38,7 @@ public class AddNumbersAjaxServlet extends HttpServlet {
 		
 		// Use a controller to process the request
 		NumbersController controller = new NumbersController();
-		Double result = controller.add(first, second, third);
+		String result = controller.add(first.toString(), second.toString(), third.toString());
 		
 		// Send back a response
 		resp.setContentType("text/plain");

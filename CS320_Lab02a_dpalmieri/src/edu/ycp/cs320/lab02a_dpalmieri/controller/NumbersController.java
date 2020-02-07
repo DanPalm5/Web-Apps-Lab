@@ -11,18 +11,25 @@ public class NumbersController {
 	}
 	
 	
-	public Double add(Double first, Double second, Double third) {
+	public String add(String first, String second, String third) {
+			model.setFirst(first);
+			model.setSecond(second);
+			model.setThird(third);
+			Double firstToAdd = Double.parseDouble(model.getFirst());
+			Double secondToAdd = Double.parseDouble(second);
+			Double thirdToAdd = Double.parseDouble(third);
+			Double result= firstToAdd + secondToAdd + thirdToAdd;
+			model.setAddResult(result.toString());
+			return model.getAddResult();
+		}
+	
+	public String multiply(String first, String second) {
 		model.setFirst(first);
 		model.setSecond(second);
-		model.setThird(third);
-		model.setAddResult(model.getFirst()+model.getSecond()+model.getThird());
-		return model.getAddResult();
-	}
-	
-	public Double multiply(Double first, Double second) {
-		model.setFirst(first);
-		model.setSecond(second);	
-		model.setMultiplyResult(model.getFirst()*model.getSecond());
+		Double firstToMult = Double.parseDouble(model.getFirst());
+		Double secondToMult = Double.parseDouble(model.getSecond());
+		Double result = firstToMult*secondToMult;
+		model.setMultiplyResult(result.toString());
 		return model.getMultiplyResult();
 	}
 
